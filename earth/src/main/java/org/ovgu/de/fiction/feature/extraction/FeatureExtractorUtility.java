@@ -244,6 +244,7 @@ public class FeatureExtractorUtility {
 			//now write the csv to ARFF format for weka
 			writeCSVtoARFF(FEATURE_CSV_FILE,FEATURE_ARFF_FILE);
 			fileWriter.flush();
+			//fileWriter.close();
 		}
 		return corpus_normalized;
 
@@ -255,11 +256,22 @@ public class FeatureExtractorUtility {
 		 loader.setSource(new File(source_CSV_FILE));//source_csv
 		 Instances data = loader.getDataSet();
 		 
+		 
 		 // save ARFF
 		 ArffSaver saver = new ArffSaver();
 		 saver.setInstances(data);
-		 saver.setFile(new File(target_ARFF_FILE));//target_arff
-		 saver.writeBatch();
+		 
+		 File file = new File(target_ARFF_FILE);
+		 if (file.exists()){
+		     file.delete();
+		     saver.setFile(new File(target_ARFF_FILE));//target_arff
+			 saver.writeBatch();
+		
+			 
+		
+		 }  
+		 
+		
 		
 	}
 
